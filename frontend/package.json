@@ -1,0 +1,24 @@
+{
+  "name": "community-physio-frontend",
+  "version": "1.0.0",
+  "description": "城市社区上门理疗预约评估疗程结算平台 - 前端",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "element-plus": "^2.8.4",
+    "@element-plus/icons-vue": "^2.3.1",
+    "pinia": "^2.2.2",
+    "vue": "^3.5.10",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite": "^5.4.8"
+  }
+}
