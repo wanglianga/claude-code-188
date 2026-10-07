@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: physio-db
+    environment:
+      POSTGRES_USER: physio
+      POSTGRES_PASSWORD: physio123
+      POSTGRES_DB: physio
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U physio -d physio']
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    ports:
+      - '5432:5432'
+
+  backend:
+    build: ./backend
+    container_name: physio-backend
+    environment:
+      DB_HOST: db
+      DB_PORT: '5432'
+      DB_USER: physio
+      DB_PASS: physio123
+      DB_NAME: physio
+      JWT_SECRET: physio-compose-secret
+      JWT_EXPIRES: 7d
+      PORT: '3000'
+      SEED_ON_BOOT: 'true'
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '3000:3000'
+
+  frontend:
+    build: ./frontend
+    container_name: physio-frontend
+    depends_on:
+      - backend
+    ports:
+      - '8080:80'
+
+volumes:
+  pgdata:
